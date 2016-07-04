@@ -13,15 +13,45 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/java-gen']
+        }
+    }
 }
-
+ext {
+    libraries = [
+            supportVersion: "23.2.1",
+            retrofit2     : "2.0.1",
+            rxandroid     : "1.1.0",
+            klog          : "1.4.0",
+            butterknife   : "7.0.1",
+            spinkit       : "1.0.3",
+            greendao      : "2.2.0",
+            joda_time     : "2.9.3",
+            sweetalert    : "1.3"
+    ]
+}
+def libs = this.ext.libraries // 库
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
+    compile "com.android.support:appcompat-v7:${libs.supportVersion}"
+    compile "com.android.support:design:${libs.supportVersion}"
+    compile "com.android.support:gridlayout-v7:${libs.supportVersion}"
+    compile "com.android.support:cardview-v7:${libs.supportVersion}"
+    compile "com.android.support:support-v4:${libs.supportVersion}"
+
+    compile "org.greenrobot:greendao:${libs.greendao}"
+    compile "com.github.zhaokaiqiang.klog:library:${libs.klog}"
+
+    compile "com.jakewharton:butterknife:${libs.butterknife}"
+    compile project(path: ':appbase')
+//https://github.com/lipangit/JieCaoVideoPlayer
+    compile 'fm.jiecao:jiecaovideoplayer:3.6.1'
+
 }
