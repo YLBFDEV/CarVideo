@@ -3,7 +3,6 @@
 机动车驾驶学习视频App
 
 ![提示](https://raw.github.com/YLBFDEV/CarVideo/master/resources.io/demonstration.gif)
-![提示](https://raw.github.com/YLBFDEV/CarVideo/master/resources.io/raw_code.png)
 
 欢迎提出修改意见
 
@@ -19,5 +18,5 @@
 [KLog](https://github.com/ZhaoKaiQiang/KLog)
 
 下载地址
-![下载地址](https://raw.github.com/YLBFDEV/CarVideo/master/resources.io/raw_code.png)
+![下载地址](https://raw.github.com/YLBFDEV/CarVideo/master/resources.io/raw_ercode.png)
 
