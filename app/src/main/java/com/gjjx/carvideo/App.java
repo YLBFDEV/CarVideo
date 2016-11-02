@@ -14,7 +14,8 @@ public class App extends Application {
     private static DaoMaster daoMaster;
     private static DaoSession daoSession;
     private static final String DATABASE_NAME = "db_gjjx.db";
-    public static final String BASE_URL = "http://139.129.24.67:80/";
+    //public static final String BASE_URL = "http://139.129.24.67:80/";
+    public static final String BASE_URL = "http://115.28.213.49:80/";
     public static boolean IS_INSIDE_PLAYER = true;
 
     @Override
@@ -27,6 +28,7 @@ public class App extends Application {
      * 取得DaoMaster
      *
      * @param context
+     *
      * @return
      */
     public static DaoMaster getDaoMaster(Context context) {
@@ -41,6 +43,7 @@ public class App extends Application {
      * 取得DaoSession
      *
      * @param context
+     *
      * @return
      */
     public static DaoSession getDaoSession(Context context) {
