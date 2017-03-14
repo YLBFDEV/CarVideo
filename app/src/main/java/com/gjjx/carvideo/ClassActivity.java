@@ -23,7 +23,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
