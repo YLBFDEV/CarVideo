@@ -21,7 +21,7 @@ import com.ylbf.appbase.base.callback.OnItemClickAdapter;
 import java.io.File;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
@@ -29,9 +29,9 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by ylbf_ on 2016/6/29.
  */
 public class ClassActivity extends AppCompatActivity {
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     private BaseRecyclerAdapter<TBClass> adapter;
     private List<TBClass> tbClassList;

@@ -2,6 +2,7 @@ package com.gjjx.carvideo;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.gjjx.carvideo.databinding.ActivityMainBinding;
 import com.gjjx.carvideo.db.TBCourse;
 import com.gjjx.carvideo.db.TBCourseDao;
 import com.socks.library.KLog;
@@ -25,23 +27,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.toolbar)
+    private ActivityMainBinding binding;
+
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView navigationView;
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager viewPager;
-    @Bind(R.id.tab_layout)
+    @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     private Context context;
 
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding =DataBindingUtil.setContentView(this,R.layout.activity_main);
         context = MainActivity.this;
         ButterKnife.bind(this);
         if (toolbar != null) {
@@ -73,13 +77,14 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-        navigationView.setNavigationItemSelectedListener(this);
+        binding.navView.setNavigationItemSelectedListener(this);
+//        navigationView.setNavigationItemSelectedListener(this);
         initialData();
     }
 
     private void initialData() {
         dao = App.getDaoMaster(context).newSession().getTBCourseDao();
-        fragments = new ArrayList<ListFragment>();
+        fragments = new ArrayList<>();
         Resources res = getResources();
         String[] subject_titles = res.getStringArray(R.array.subject_titles);
         List<String> titles_list = Arrays.asList(subject_titles);
@@ -113,7 +118,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -168,7 +173,7 @@ public class MainActivity extends AppCompatActivity
             App.IS_INSIDE_PLAYER = true;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

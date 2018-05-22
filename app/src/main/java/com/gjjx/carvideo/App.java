@@ -15,7 +15,8 @@ public class App extends Application {
     private static DaoSession daoSession;
     private static final String DATABASE_NAME = "db_gjjx.db";
     //public static final String BASE_URL = "http://139.129.24.67:80/";
-    public static final String BASE_URL = "http://115.28.213.49:80/";
+    //public static final String BASE_URL = "http://115.28.213.49:80/";
+    public static final String BASE_URL = "http://gjvideo.jiapeng.net/";
     public static boolean IS_INSIDE_PLAYER = true;
 
     @Override
