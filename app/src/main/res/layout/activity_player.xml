@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-        android:id="@+id/videoplayer"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".JCFullScreenActivity">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:theme="@style/AppTheme.AppBarOverlay"/>
+
+        <com.dueeeke.videoplayer.player.IjkVideoView
+            android:id="@+id/videoplayer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</android.support.v4.widget.DrawerLayout>

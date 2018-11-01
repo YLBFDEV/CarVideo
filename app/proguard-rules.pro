@@ -209,4 +209,10 @@
 -keep interface okhttp3.** { *; }
 # end
 
+#dkplayer
+-keep class tv.danmaku.ijk.** { *; }
+-dontwarn tv.danmaku.ijk.**
+-keep class com.dueeeke.videoplayer.** { *; }
+-dontwarn com.dueeeke.videoplayer.**
+#
 -assumenosideeffects class android.util.Log{ public static *** d(...); public static *** w(...); public static *** e(...); public static *** i(...); public static *** v(...); }

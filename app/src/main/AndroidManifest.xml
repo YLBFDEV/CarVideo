@@ -29,7 +29,8 @@
         <activity
             android:name=".JCFullScreenActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="landscape" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

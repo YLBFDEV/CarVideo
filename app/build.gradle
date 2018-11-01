@@ -1,17 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
     dataBinding{
         enabled = true
     }
     defaultConfig {
         applicationId "com.gjjx.carvideo"
         minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 4
-        versionName "1.0.3"
+        targetSdkVersion 28
+        versionCode 5
+        versionName "1.0.4"
     }
     buildTypes {
         release {
@@ -30,7 +29,7 @@ android {
 }
 ext {
     libraries = [
-            supportVersion: "27.1.1",
+            supportVersion: "28.0.0",
             retrofit2     : "2.0.1",
             rxandroid     : "1.1.0",
             klog          : "1.6.0",
@@ -61,8 +60,15 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"
 
     implementation project(path: ':appbase')
-//https://github.com/lipangit/JieCaoVideoPlayer
-    implementation 'fm.jiecao:jiecaovideoplayer:5.8.1'
+    //https://github.com/lipangit/JieCaoVideoPlayer
+    //implementation 'cn.jzvd:jiaozivideoplayer:6.3.1'
+
+    //https://github.com/dueeeke/dkplayer
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-java:2.5.3'
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-armv7a:2.5.3'
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-arm64:2.5.3'
+
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-ui:2.5.3'
 
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0'
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0'

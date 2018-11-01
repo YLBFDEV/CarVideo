@@ -1,92 +1,109 @@
 package com.gjjx.carvideo;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
-import android.view.WindowManager;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import com.dueeeke.videocontroller.StandardVideoController;
+import com.dueeeke.videoplayer.player.IjkVideoView;
+import com.dueeeke.videoplayer.player.PlayerConfig;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by ylbf_ on 2017/3/14.
  */
 
-public class JCFullScreenActivity extends Activity {
+public class JCFullScreenActivity extends AppCompatActivity {
+    @BindView(R.id.videoplayer)
+    IjkVideoView ijkVideoView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
-    static void startActivityFromNormal(Context context, int state, String url, Class videoPlayClass, Object... obj) {
-        CURRENT_STATE = state;
-        DIRECT_FULLSCREEN = false;
+    public static void startActivity(Context context, String url, String title) {
         URL = url;
-        VIDEO_PLAYER_CLASS = videoPlayClass;
-        OBJECTS = obj;
+        TITLE = title;
         Intent intent = new Intent(context, JCFullScreenActivity.class);
         context.startActivity(intent);
     }
 
-    /**
-     * <p>直接进入全屏播放</p>
-     * <p>Full screen play video derictly</p>
-     *
-     * @param context        context
-     * @param url            video mUrl
-     * @param videoPlayClass your videoplayer extends JCAbstraceVideoPlayer
-     * @param obj            custom param
-     */
-    public static void startActivity(Context context, String url, Class videoPlayClass, Object... obj) {
-        CURRENT_STATE = JCVideoPlayer.CURRENT_STATE_NORMAL;
-        URL = url;
-        DIRECT_FULLSCREEN = true;
-        VIDEO_PLAYER_CLASS = videoPlayClass;
-        OBJECTS = obj;
-        Intent intent = new Intent(context, JCFullScreenActivity.class);
-        context.startActivity(intent);
-    }
-
-    /**
-     * 刚启动全屏时的播放状态
-     */
-    static int CURRENT_STATE = -1;
     public static String URL;
-    static boolean DIRECT_FULLSCREEN = false;//this is should be in videoplayer
-    static Class VIDEO_PLAYER_CLASS;
-    static Object[] OBJECTS;
+    static String TITLE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        View decor = this.getWindow().getDecorView();
-        decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         setContentView(R.layout.activity_player);
+        ButterKnife.bind(this);
 
-        JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.videoplayer);
+        toolbar.setTitle(TITLE);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        jcVideoPlayerStandard.setUp(URL
-                , JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, OBJECTS);
-        jcVideoPlayerStandard.startButton.performClick();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
-            return;
-        }
-        super.onBackPressed();
+        ijkVideoView.setUrl(URL); //设置视频地址
+        ijkVideoView.setTitle(TITLE); //设置视频标题
+        StandardVideoController controller = new StandardVideoController(this);
+        ijkVideoView.setVideoController(controller); //设置控制器，如需定制可继承BaseVideoController
+        //高级设置（可选，须在start()之前调用方可生效）
+        PlayerConfig playerConfig = new PlayerConfig.Builder()
+                .enableCache() //启用边播边缓存功能
+                .autoRotate() //启用重力感应自动进入/退出全屏功能
+//                .enableMediaCodec()//启动硬解码，启用后可能导致视频黑屏，音画不同步
+                .usingSurfaceView() //启用SurfaceView显示视频，不调用默认使用TextureView
+                .savingProgress() //保存播放进度
+                .disableAudioFocus() //关闭AudioFocusChange监听
+                .setLooping() //循环播放当前正在播放的视频
+                .build();
+        ijkVideoView.setPlayerConfig(playerConfig);
+        ijkVideoView.start(); //开始播放，不调用则不自动播放
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
-//        finish();
+        ijkVideoView.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ijkVideoView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ijkVideoView.release();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (!ijkVideoView.onBackPressed()) {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

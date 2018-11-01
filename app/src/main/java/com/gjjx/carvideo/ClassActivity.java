@@ -23,7 +23,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * Created by ylbf_ on 2016/6/29.
@@ -74,7 +73,7 @@ public class ClassActivity extends AppCompatActivity {
                 String title = item.getName() + ":" + item.getSummary();
                 KLog.d(title + "\t" + url);
                 if (App.IS_INSIDE_PLAYER) {
-                    JCFullScreenActivity.startActivity(ClassActivity.this, url, JCVideoPlayerStandard.class, title);
+                    JCFullScreenActivity.startActivity(ClassActivity.this, url, title);
                 } else {
                     Uri uri = Uri.parse(url);
                     Intent it = new Intent(Intent.ACTION_VIEW, uri);
