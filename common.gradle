@@ -1,0 +1,59 @@
+/**
+ * 使用方法
+ * apply from: '../common.gradle'
+ */
+
+/**
+ *
+ * @return 获得当前日期
+ */
+def static releaseDate() {
+    def date = new Date()
+    return date.format('yyyyMMdd')
+}
+/**
+ *
+ * @return 获得当前git HEAD SHA-1
+ */
+def static gitHeadSHA() {
+    return 'git rev-parse --short HEAD'.execute().text.trim()
+}
+/**
+ * 加载签名配置文件
+ */
+def loadSigningConfigs() {
+    Properties props = new Properties()
+    def propFile = file('../signing.properties')
+    if (propFile.canRead()) {
+        props.load(new FileInputStream(propFile))
+        if (props != null && props.containsKey('RELEASE_STORE_FILE') && props.containsKey('RELEASE_STORE_PASSWORD') &&
+                props.containsKey('RELEASE_KEY_ALIAS') && props.containsKey('RELEASE_KEY_PASSWORD')) {
+            android.signingConfigs.release.storeFile = file(props['RELEASE_STORE_FILE'])
+            android.signingConfigs.release.storePassword = props['RELEASE_STORE_PASSWORD']
+            android.signingConfigs.release.keyAlias = props['RELEASE_KEY_ALIAS']
+            android.signingConfigs.release.keyPassword = props['RELEASE_KEY_PASSWORD']
+        } else {
+            android.buildTypes.release.signingConfig = null
+        }
+    } else {
+        android.buildTypes.release.signingConfig = null
+    }
+}
+
+android {
+    signingConfigs { release {} }
+    buildTypes {
+        release {
+            loadSigningConfigs()
+            signingConfig signingConfigs.release
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (variant.name == "release") {
+                variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/apk/release")
+                outputFileName = "${rootProject.name}_${variant.name}_v${variant.versionName}.${releaseDate()}.${gitHeadSHA()}.apk"
+            }
+        }
+    }
+}
