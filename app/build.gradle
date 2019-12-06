@@ -12,6 +12,10 @@ android {
         versionCode 5
         versionName "1.0.4"
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
         release {
             minifyEnabled true
@@ -33,7 +37,7 @@ ext {
             retrofit2     : "2.0.1",
             rxandroid     : "1.1.0",
             klog          : "1.6.0",
-            butterknife   : "8.8.1",
+            butterknife   : "9.0.0",
             spinkit       : "1.0.3",
             greendao      : "2.2.0",
             joda_time     : "2.9.3",

@@ -22,7 +22,7 @@ ext {
             retrofit2     : "2.1.0",
             rxandroid     : "1.2.1",
             klog          : "1.6.0",
-            butterknife   : "8.8.1",
+            butterknife   : "9.0.0",
             spinkit       : "1.0.3",
             greendao      : "2.2.0",
             joda_time     : "2.9.3",
