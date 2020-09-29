@@ -51,7 +51,7 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
             if (variant.name == "release") {
-                variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/apk/release")
+                variant.getPackageApplicationProvider().get().outputDirectory = new File(project.rootDir.absolutePath + "/apk/release")
                 outputFileName = "${rootProject.name}_${variant.name}_v${variant.versionName}.${releaseDate()}.${gitHeadSHA()}.apk"
             }
         }

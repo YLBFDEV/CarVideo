@@ -1,16 +1,20 @@
 apply plugin: 'com.android.application'
+apply from: '../common.gradle'
 
 android {
     compileSdkVersion 28
-    dataBinding{
-        enabled = true
-    }
     defaultConfig {
         applicationId "com.gjjx.carvideo"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 5
         versionName "1.0.4"
+        ndk {
+            abiFilters "armeabi-v7a","arm64-v8a"
+        }
+    }
+    buildFeatures{
+        dataBinding = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -37,7 +41,7 @@ ext {
             retrofit2     : "2.0.1",
             rxandroid     : "1.1.0",
             klog          : "1.6.0",
-            butterknife   : "9.0.0",
+            butterknife   : "10.2.3",
             spinkit       : "1.0.3",
             greendao      : "2.2.0",
             joda_time     : "2.9.3",
@@ -48,15 +52,15 @@ def libs = this.ext.libraries // 库
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
-    implementation "com.android.support:appcompat-v7:${libs.supportVersion}"
-    implementation "com.android.support:design:${libs.supportVersion}"
-    implementation "com.android.support:gridlayout-v7:${libs.supportVersion}"
-    implementation "com.android.support:cardview-v7:${libs.supportVersion}"
-    implementation "com.android.support:support-v4:${libs.supportVersion}"
+    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation "com.google.android.material:material:1.2.1"
+    implementation "androidx.gridlayout:gridlayout:1.0.0"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
 
     implementation "org.greenrobot:greendao:${libs.greendao}"
     implementation "com.github.zhaokaiqiang.klog:library:${libs.klog}"
-    //butterknife
+    //butterknife https://github.com/JakeWharton/butterknife
     implementation ("com.jakewharton:butterknife:${libs.butterknife}") {
         exclude(module: 'support-annotations')
         exclude(module: 'support-compat')
@@ -68,11 +72,16 @@ dependencies {
     //implementation 'cn.jzvd:jiaozivideoplayer:6.3.1'
 
     //https://github.com/dueeeke/dkplayer
-    implementation 'com.github.dueeeke.dkplayer:dkplayer-java:2.5.3'
-    implementation 'com.github.dueeeke.dkplayer:dkplayer-armv7a:2.5.3'
-    implementation 'com.github.dueeeke.dkplayer:dkplayer-arm64:2.5.3'
-
-    implementation 'com.github.dueeeke.dkplayer:dkplayer-ui:2.5.3'
+    //必选，内部默认使用系统mediaplayer进行解码
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-java:3.2.6'
+    //可选，包含StandardVideoController的实现
+    implementation 'com.github.dueeeke.dkplayer:dkplayer-ui:3.2.6'
+    //可选，使用exoplayer进行解码
+    implementation 'com.github.dueeeke.dkplayer:player-exo:3.2.6'
+    //可选，使用ijkplayer进行解码
+    implementation 'com.github.dueeeke.dkplayer:player-ijk:3.2.6'
+    // 可选，如需要缓存或者抖音预加载功能请引入此库
+    implementation 'com.github.dueeeke.dkplayer:videocache:3.2.6'
 
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0'
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0'

@@ -33,10 +33,10 @@ def libs = this.ext.libraries // 库
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation  'junit:junit:4.12'
-    implementation "com.android.support:appcompat-v7:${libs.supportVersion}"
-    implementation "com.android.support:design:${libs.supportVersion}"
-    implementation "com.android.support:gridlayout-v7:${libs.supportVersion}"
-    implementation "com.android.support:support-v4:${libs.supportVersion}"
+    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation "com.google.android.material:material:1.2.1"
+    implementation "androidx.gridlayout:gridlayout:1.0.0"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
 
     //http://square.github.io/retrofit/
     implementation "com.squareup.retrofit2:retrofit:${libs.retrofit2}"

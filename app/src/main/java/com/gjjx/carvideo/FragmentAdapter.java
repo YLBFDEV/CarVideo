@@ -1,10 +1,10 @@
 package com.gjjx.carvideo;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 /**
  * Created by ylbf_ on 2016/6/29.
@@ -14,7 +14,9 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
     private List<String> titles;
 
     public FragmentAdapter(FragmentManager fm, List<ListFragment> fragments, List<String> titles) {
-        super(fm);
+        // https://stackoverflow.com/questions/51131172/fragmentstatepageradapter-is-deprecated-from-api-27
+        // super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.fragments = fragments;
         this.titles = titles;
     }
